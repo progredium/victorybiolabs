@@ -1,222 +1,194 @@
--- VictoryBioLabs Seed Data
--- Run AFTER schema.sql in your Supabase SQL editor
+-- Seed: VictoryBioLabs Products (scraped from VictoryPeptides.com)
+-- Run this in Supabase SQL editor
 
--- BPC-157
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'BPC-157',
-  'bpc-157',
-  'BPC-157 (Body Protection Compound-157) is a pentadecapeptide composed of 15 amino acids. Research studies investigate its role in cellular repair mechanisms, angiogenesis, and various biological pathways. This compound has been the subject of numerous laboratory and animal studies exploring its physiological properties.
+DELETE FROM product_variants;
+DELETE FROM products;
 
-Studies have examined BPC-157 in the context of musculoskeletal tissue, gastrointestinal function, and neurological research. Laboratory research suggests potential interactions with growth hormone receptors and nitric oxide systems.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('BPC-157', 'bpc-157', 'BPC-157 is a synthetic peptide fragment studied for its potential to accelerate the healing of tendons, ligaments, muscles, and even gut tissue. Research suggests it may support tissue regeneration, reduce inflammation, and improve recovery after injury.', 69, '["/images/products/bpc-157-1.webp","/images/products/bpc-157-2.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-All research involving this compound should be conducted by qualified researchers in appropriate laboratory settings, following all applicable regulations and ethical guidelines.',
-  'Research-grade BPC-157 peptide for laboratory investigation of cellular repair mechanisms and biological pathways.',
-  69.00,
-  'peptides',
-  ARRAY['bpc-157', 'repair', 'research', 'peptide'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 69, 'BPC-157-5MG', 50 FROM products WHERE slug = 'bpc-157'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 89, 'BPC-157-10MG', 50 FROM products WHERE slug = 'bpc-157'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 69.00, 50, 'BPC157-5MG', 0.005
-FROM products WHERE slug = 'bpc-157'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Ipamorelin', 'ipamorelin', 'Ipamorelin is a selective growth hormone secretagogue studied for its ability to stimulate natural growth hormone release. Research has explored its potential in muscle growth, fat reduction, and recovery support, with minimal effects on cortisol or appetite.', 49, '["/images/products/ipamorelin-1.webp","/images/products/ipamorelin-2.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 89.00, 30, 'BPC157-10MG', 0.010
-FROM products WHERE slug = 'bpc-157'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 49, 'IPAMORELIN-5MG', 50 FROM products WHERE slug = 'ipamorelin'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 79, 'IPAMORELIN-10MG', 50 FROM products WHERE slug = 'ipamorelin'
+ON CONFLICT DO NOTHING;
 
--- Ipamorelin
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'Ipamorelin',
-  'ipamorelin',
-  'Ipamorelin is a synthetic pentapeptide and selective growth hormone secretagogue. Laboratory research has explored its interactions with ghrelin receptors and growth hormone release pathways. Studies have investigated its selectivity profile compared to other secretagogues, noting its research-characterized specificity.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Tirzepatide', 'tirzepatide', 'Tirzepatide is a powerful, once-weekly injectable medication designed to help adults manage type 2 diabetes and achieve meaningful weight loss. It works by activating two key hormone receptors—GLP-1 and GIP—to regulate blood sugar levels and control appetite more effectively than traditional medications.
+Whether you’re aiming to improve blood glucose control or reduce body weight, Tirzepatide offers a modern, science-backed solution.', 119, '["/images/products/tirzepatide-1.webp","/images/products/tirzepatide-2.webp","/images/products/tirzepatide-3.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-Preclinical research has examined Ipamorelin in the context of metabolic studies, body composition research, and endocrine system investigation. This compound is utilized by researchers studying the GH/IGF-1 axis and related biological mechanisms.
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 119, 'TIRZEPATIDE-10MG', 50 FROM products WHERE slug = 'tirzepatide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '20mg', 179, 'TIRZEPATIDE-20MG', 50 FROM products WHERE slug = 'tirzepatide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '30mg', 249, 'TIRZEPATIDE-30MG', 50 FROM products WHERE slug = 'tirzepatide'
+ON CONFLICT DO NOTHING;
 
-For use in certified research facilities only. Researchers should follow all institutional protocols and applicable regulations when working with this compound.',
-  'Research-grade Ipamorelin for laboratory investigation of growth hormone secretagogue pathways and GH/IGF-1 axis mechanisms.',
-  49.00,
-  'peptides',
-  ARRAY['ipamorelin', 'secretagogue', 'research', 'peptide'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Semaglutide', 'semaglutide', 'Semaglutide is a GLP-1 receptor agonist studied for its effects on glucose regulation and appetite suppression. Research has explored its role in supporting weight management, metabolic health, and improved insulin response.', 79, '["/images/products/semaglutide-1.webp","/images/products/semaglutide-2.webp","/images/products/semaglutide-3.webp","/images/products/semaglutide-4.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '2mg Vial', 49.00, 60, 'IPA-2MG', 0.002
-FROM products WHERE slug = 'ipamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 79, 'SEMAGLUTIDE-10MG', 50 FROM products WHERE slug = 'semaglutide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '20mg', 139, 'SEMAGLUTIDE-20MG', 50 FROM products WHERE slug = 'semaglutide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '30mg', 199, 'SEMAGLUTIDE-30MG', 50 FROM products WHERE slug = 'semaglutide'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 65.00, 45, 'IPA-5MG', 0.005
-FROM products WHERE slug = 'ipamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Retatrutide', 'retatrutide', 'Retatrutide is triple hormone receptor activity, targeting GLP-1, GIP, and glucagon receptors—all critical to regulating metabolism, blood sugar, and appetite. Research has focused on its potential to support weight management, improve metabolic function, and enhance glucose regulation.', 149, '["/images/products/retatrutide-1.webp","/images/products/retatrutide-2.webp","/images/products/retatrutide-3.webp","/images/products/retatrutide-4.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 79.00, 30, 'IPA-10MG', 0.010
-FROM products WHERE slug = 'ipamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 149, 'RETATRUTIDE-10MG', 50 FROM products WHERE slug = 'retatrutide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '20mg', 239, 'RETATRUTIDE-20MG', 50 FROM products WHERE slug = 'retatrutide'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '30mg', 339, 'RETATRUTIDE-30MG', 50 FROM products WHERE slug = 'retatrutide'
+ON CONFLICT DO NOTHING;
 
--- Retatrutide
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'Retatrutide',
-  'retatrutide',
-  'Retatrutide (LY3437943) is a triple agonist peptide investigated for its activity at GIP, GLP-1, and glucagon receptors. Research has characterized its binding affinities and receptor activation profiles across these three receptor systems.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Tesamorelin', 'tesamorelin', 'Tesamorelin is a synthetic peptide analogue of growth hormone–releasing hormone (GHRH). It is studied for its ability to stimulate natural growth hormone production, with research exploring applications in fat metabolism, muscle preservation, and improved body composition.', 59, '["/images/products/tesamorelin-1.webp","/images/products/tesamorelin-2.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-Laboratory and clinical research studies have investigated Retatrutide in the context of metabolic biology, with published studies examining glucose metabolism, lipid regulation, and body composition parameters in research settings.
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 59, 'TESAMORELIN-5MG', 50 FROM products WHERE slug = 'tesamorelin'
+ON CONFLICT DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 99, 'TESAMORELIN-10MG', 50 FROM products WHERE slug = 'tesamorelin'
+ON CONFLICT DO NOTHING;
 
-This compound is provided for qualified researchers studying multi-receptor agonism and metabolic signaling pathways. All use must comply with applicable research regulations and institutional review protocols.',
-  'Research-grade Retatrutide triple agonist peptide for investigation of GIP, GLP-1, and glucagon receptor biology.',
-  149.00,
-  'peptides',
-  ARRAY['retatrutide', 'triple-agonist', 'metabolic', 'research'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('SS-31 (Elamipretide)', 'ss-31', 'SS-31 (Elamipretide) is a mitochondria-targeting research peptide studied for its potential to protect and restore cellular energy production. It works by binding to cardiolipin, a lipid critical for mitochondrial function, and is thought to improve energy efficiency, reduce oxidative stress, and support cellular survival under stress conditions. Research has explored SS-31 in areas such as age-related decline, muscle performance, cardiovascular health, and neuroprotection, making it of great interest in longevity and metabolic studies.', 45, '["/images/products/ss-31-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '2mg Vial', 149.00, 25, 'RET-2MG', 0.002
-FROM products WHERE slug = 'retatrutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 45, 'SS-31-10MG', 50 FROM products WHERE slug = 'ss-31'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 229.00, 20, 'RET-5MG', 0.005
-FROM products WHERE slug = 'retatrutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('HCG', 'hcg-5mg', 'HCG (Human Chorionic Gonadotropin) is a hormone studied for its role in hormone balance, reproductive function, and testosterone stimulation. Research has explored its potential in fertility support and muscle preservation during caloric restriction.', 99, '["/images/products/hcg-5mg-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 339.00, 15, 'RET-10MG', 0.010
-FROM products WHERE slug = 'retatrutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 99, 'HCG-5MG-5MG', 50 FROM products WHERE slug = 'hcg-5mg'
+ON CONFLICT DO NOTHING;
 
--- Semaglutide
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'Semaglutide',
-  'semaglutide',
-  'Semaglutide is a GLP-1 receptor agonist peptide analog. Research has extensively characterized its pharmacological properties, including its extended half-life compared to native GLP-1. Academic and pharmaceutical research has investigated its molecular interactions with GLP-1 receptors and downstream signaling cascades.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Hexarelin', 'hexarelin-5mg', 'Hexarelin is a synthetic growth hormone secretagogue studied for its ability to stimulate growth hormone release. Research has explored its potential in muscle development, fat metabolism, and cardiovascular support.', 39, '["/images/products/hexarelin-5mg-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-Published literature explores semaglutide in the context of pancreatic beta-cell biology, cardiovascular signaling research, and metabolic pathway studies. This compound is used in laboratory settings for receptor binding studies, signaling pathway investigation, and related research applications.
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 39, 'HEXARELIN-5MG-5MG', 50 FROM products WHERE slug = 'hexarelin-5mg'
+ON CONFLICT DO NOTHING;
 
-Provided for qualified researchers and research institutions only.',
-  'Research-grade Semaglutide GLP-1 receptor agonist for laboratory investigation of metabolic signaling and receptor biology.',
-  79.00,
-  'peptides',
-  ARRAY['semaglutide', 'glp-1', 'metabolic', 'research'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('NAD+', 'nad', 'NAD+ (Nicotinamide Adenine Dinucleotide) is a vital coenzyme found in every living cell. It plays a central role in cellular energy production, DNA repair, and overall metabolic function. As we age, NAD+ levels decline, contributing to reduced energy, cognitive function, and resilience against disease. Supplementing or boosting NAD+ is a promising strategy for enhancing longevity and overall health.', 119, '["/images/products/nad-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '2mg Vial', 79.00, 40, 'SEM-2MG', 0.002
-FROM products WHERE slug = 'semaglutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '500mg', 119, 'NAD-500MG', 50 FROM products WHERE slug = 'nad'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 129.00, 30, 'SEM-5MG', 0.005
-FROM products WHERE slug = 'semaglutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Semax', 'semax-5mg', 'Semax is a synthetic peptide derived from adrenocorticotropic hormone (ACTH) fragments. It is studied for its potential neuroprotective and nootropic effects, with research exploring roles in cognitive function, memory, and recovery from neurological stress.', 49, '["/images/products/semax-5mg-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 199.00, 20, 'SEM-10MG', 0.010
-FROM products WHERE slug = 'semaglutide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 49, 'SEMAX-5MG-5MG', 50 FROM products WHERE slug = 'semax-5mg'
+ON CONFLICT DO NOTHING;
 
--- Tesamorelin
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'Tesamorelin',
-  'tesamorelin',
-  'Tesamorelin is a synthetic analog of growth hormone-releasing hormone (GHRH). Research investigations have characterized its interactions with GHRH receptors and downstream GH secretion pathways. Laboratory studies have examined its stability profile and receptor binding characteristics relative to native GHRH.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Sermorelin', 'sermorelin-5mg', 'Sermorelin is a synthetic peptide that functions as a growth hormone–releasing hormone (GHRH) analogue. It is studied for its ability to stimulate natural growth hormone production, with research exploring benefits in recovery, body composition, and healthy aging.', 29, '["/images/products/sermorelin-5mg-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-Research publications have explored tesamorelin in the context of growth hormone axis biology, lipid metabolism studies, and endocrine system research. This compound is utilized by researchers studying GHRH receptor pharmacology and related biological systems.
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '5mg', 29, 'SERMORELIN-5MG-5MG', 50 FROM products WHERE slug = 'sermorelin-5mg'
+ON CONFLICT DO NOTHING;
 
-For use by qualified researchers in certified laboratory environments only.',
-  'Research-grade Tesamorelin GHRH analog for investigation of growth hormone axis biology and receptor pharmacology.',
-  59.00,
-  'peptides',
-  ARRAY['tesamorelin', 'ghrh', 'growth-hormone', 'research'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Snap-8', 'snap-8', 'Snap-8 is a topical anti-wrinkle peptide often referred to as a “Botox alternative.” It is a synthetic octapeptide that works by reducing muscle contractions that cause expression lines, particularly on the forehead and around the eyes. As a safer, non-invasive alternative to botulinum toxin injections, Snap-8 is widely used in anti-aging skincare products to smooth dynamic wrinkles and improve skin appearance.', 69, '["/images/products/snap-8-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '2mg Vial', 59.00, 35, 'TES-2MG', 0.002
-FROM products WHERE slug = 'tesamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 69, 'SNAP-8-10MG', 50 FROM products WHERE slug = 'snap-8'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 79.00, 25, 'TES-5MG', 0.005
-FROM products WHERE slug = 'tesamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Thymosin Alpha-1', 'thymosin-alpha-1', 'Thymosin Alpha-1 is a naturally occurring peptide fragment studied for its role in immune system modulation. Research has explored its potential to enhance immune response, regulate inflammation, and support overall immune balance.', 99, '["/images/products/thymosin-alpha-1-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 99.00, 20, 'TES-10MG', 0.010
-FROM products WHERE slug = 'tesamorelin'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '10mg', 99, 'THYMOSIN-ALPHA-1-10MG', 50 FROM products WHERE slug = 'thymosin-alpha-1'
+ON CONFLICT DO NOTHING;
 
--- Tirzepatide
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES (
-  'Tirzepatide',
-  'tirzepatide',
-  'Tirzepatide is a dual GIP and GLP-1 receptor agonist peptide. Research has characterized its simultaneous activity at both glucose-dependent insulinotropic polypeptide (GIP) receptors and glucagon-like peptide-1 (GLP-1) receptors, making it a subject of significant scientific interest.
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Vitamin B12', 'vitamin-b12', 'Vitamin B12 (cobalamin) is a water-soluble vitamin essential for energy production, red blood cell formation, neurological function, and DNA synthesis. Since the body cannot produce B12 on its own, it must be obtained from food or supplements. Deficiency is common, especially in vegans, older adults, and individuals with absorption issues, and can lead to fatigue, brain fog, anemia, and nerve damage.', 69, '["/images/products/vitamin-b12-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-Laboratory research investigates tirzepatide in the context of incretin biology, receptor co-agonism studies, and metabolic signaling pathway research. Published studies have examined its molecular pharmacology and receptor interaction profiles in preclinical research models.
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, '50ml', 69, 'VITAMIN-B12-50ML', 50 FROM products WHERE slug = 'vitamin-b12'
+ON CONFLICT DO NOTHING;
 
-Intended for qualified researchers studying dual incretin receptor biology and related metabolic pathways.',
-  'Research-grade Tirzepatide dual GIP/GLP-1 receptor agonist for investigation of incretin biology and metabolic signaling.',
-  119.00,
-  'peptides',
-  ARRAY['tirzepatide', 'dual-agonist', 'incretin', 'research'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
+INSERT INTO products (name, slug, description, price, images, status, research_use_only, disclaimer, category)
+VALUES ('Weight Loss Starter Pack', 'weight-loss-starter-pack', '10mg of Tirzepatide. Five individually wrapped needles. 3ml of Bacteriostatic Water.', 99, '["/images/products/weight-loss-starter-pack-1.webp"]'::jsonb, 'active', true, 'For research purposes only. Not intended for human consumption. Not for diagnostic, therapeutic, or medicinal use.', 'peptides')
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name, description = EXCLUDED.description,
+  price = EXCLUDED.price, images = EXCLUDED.images, status = EXCLUDED.status;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '2mg Vial', 119.00, 30, 'TIR-2MG', 0.002
-FROM products WHERE slug = 'tirzepatide'
-ON CONFLICT (sku) DO NOTHING;
+INSERT INTO product_variants (product_id, name, price, sku, stock_qty)
+SELECT id, 'Kit', 99, 'WEIGHT-LOSS-STARTER-PACK-KIT', 50 FROM products WHERE slug = 'weight-loss-starter-pack'
+ON CONFLICT DO NOTHING;
 
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 179.00, 25, 'TIR-5MG', 0.005
-FROM products WHERE slug = 'tirzepatide'
-ON CONFLICT (sku) DO NOTHING;
-
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '10mg Vial', 249.00, 15, 'TIR-10MG', 0.010
-FROM products WHERE slug = 'tirzepatide'
-ON CONFLICT (sku) DO NOTHING;
-
--- SS-31 / Elamipretide
-INSERT INTO products (name, slug, description, short_description, price, compare_price, category, tags, status)
-VALUES (
-  'SS-31 / Elamipretide',
-  'ss-31-elamipretide',
-  'SS-31 (also known as Elamipretide or MTP-131) is a mitochondria-targeting tetrapeptide. Research has characterized its interactions with cardiolipin, a phospholipid found in the inner mitochondrial membrane. Laboratory studies have investigated its effects on mitochondrial structure and bioenergetics in research settings.
-
-Scientific publications have examined SS-31 in the context of mitochondrial biology research, cellular energetics studies, and related experimental models. Researchers utilize this compound for investigations into mitochondrial membrane dynamics and related cellular processes.
-
-For research use only by qualified scientists in appropriate laboratory settings.',
-  'Research-grade SS-31/Elamipretide mitochondria-targeting tetrapeptide for investigation of mitochondrial biology and cellular energetics.',
-  45.00,
-  60.00,
-  'peptides',
-  ARRAY['ss-31', 'elamipretide', 'mitochondria', 'research'],
-  'active'
-) ON CONFLICT (slug) DO NOTHING;
-
-INSERT INTO product_variants (product_id, name, price, stock_qty, sku, weight_g)
-SELECT id, '5mg Vial', 45.00, 40, 'SS31-5MG', 0.005
-FROM products WHERE slug = 'ss-31-elamipretide'
-ON CONFLICT (sku) DO NOTHING;
-
--- Coming soon placeholders
-INSERT INTO products (name, slug, description, short_description, price, category, tags, status)
-VALUES
-  ('CJC-1295', 'cjc-1295', 'Coming soon. CJC-1295 is a synthetic analog of growth hormone-releasing hormone (GHRH) with extended half-life. Research investigations focus on its interactions with GHRH receptors.', 'Research-grade CJC-1295 GHRH analog — coming soon.', 79.00, 'peptides', ARRAY['cjc-1295', 'ghrh', 'research'], 'coming_soon'),
-  ('TB-500 / Thymosin Beta-4', 'tb-500', 'Coming soon. TB-500 is a synthetic version of the naturally occurring peptide Thymosin Beta-4. Research explores its role in actin binding and cellular migration studies.', 'Research-grade TB-500 / Thymosin Beta-4 — coming soon.', 65.00, 'peptides', ARRAY['tb-500', 'thymosin', 'research'], 'coming_soon'),
-  ('Epithalon', 'epithalon', 'Coming soon. Epithalon (Epitalon) is a synthetic tetrapeptide. Research investigates its interactions with the pineal gland and telomere biology.', 'Research-grade Epithalon tetrapeptide — coming soon.', 55.00, 'peptides', ARRAY['epithalon', 'telomere', 'research'], 'coming_soon'),
-  ('Selank', 'selank', 'Coming soon. Selank is a synthetic heptapeptide analog of tuftsin. Research explores its interactions with GABAergic and serotonergic systems in laboratory settings.', 'Research-grade Selank heptapeptide — coming soon.', 49.00, 'peptides', ARRAY['selank', 'anxiolytic', 'research'], 'coming_soon'),
-  ('MOTS-c', 'mots-c', 'Coming soon. MOTS-c is a mitochondria-derived peptide. Research investigates its role in metabolic regulation and mitochondrial retrograde signaling pathways.', 'Research-grade MOTS-c mitochondrial peptide — coming soon.', 89.00, 'peptides', ARRAY['mots-c', 'mitochondria', 'research'], 'coming_soon')
-ON CONFLICT (slug) DO NOTHING;
