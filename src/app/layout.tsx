@@ -1,10 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import ComplianceBar from '@/components/layout/ComplianceBar'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import AgeVerificationModal from '@/components/ui/AgeVerificationModal'
 import { CartProvider } from '@/components/cart/CartProvider'
 
 const geistSans = Geist({
@@ -47,11 +43,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#060f1e] text-white`}
       >
         <CartProvider>
-          <AgeVerificationModal />
-          <ComplianceBar />
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          {children}
         </CartProvider>
       </body>
     </html>

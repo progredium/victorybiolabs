@@ -55,4 +55,66 @@ export interface Order {
   research_confirmed: boolean
   age_confirmed: boolean
   created_at: string
+  // Joined fields
+  customers?: Customer | null
+  order_items?: OrderItem[]
+}
+
+export interface OrderItem {
+  id: string
+  order_id: string
+  product_id: string
+  variant_id: string | null
+  qty: number
+  unit_price: number
+  created_at: string
+  products?: Product
+  product_variants?: ProductVariant
+}
+
+export interface OrderNote {
+  id: string
+  order_id: string
+  note: string
+  created_by: string
+  created_at: string
+}
+
+export interface Customer {
+  id: string
+  email: string
+  first_name: string | null
+  last_name: string | null
+  phone: string | null
+  created_at: string
+  // Computed/joined
+  total_orders?: number
+  ltv?: number
+  tags?: string[]
+}
+
+export interface DiscountCode {
+  id: string
+  code: string
+  type: 'percent' | 'fixed' | 'free_shipping'
+  value: number
+  usage_count: number
+  usage_limit: number | null
+  expires_at: string | null
+  active: boolean
+  created_at: string
+}
+
+export interface AdminUser {
+  id: string
+  email: string
+  role: 'owner' | 'staff' | 'readonly'
+  created_at: string
+}
+
+export interface LowStockAlert {
+  id: string
+  variant_id: string
+  threshold: number
+  active: boolean
 }
