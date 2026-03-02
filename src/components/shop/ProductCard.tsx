@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/types'
@@ -24,11 +25,21 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden group hover:border-[#D4AF37]/40 transition-all duration-200">
-      {/* Image placeholder */}
-      <div className="aspect-square bg-gradient-to-br from-[#0A1628] to-[#1a2d50] flex items-center justify-center relative">
-        <div className="text-center">
-          <span className="text-5xl">🧪</span>
-        </div>
+      {/* Product Image */}
+      <div className="aspect-square bg-gradient-to-br from-[#0A1628] to-[#1a2d50] relative overflow-hidden">
+        {product.images && product.images.length > 0 ? (
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            fill
+            className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <span className="text-5xl">🧪</span>
+          </div>
+        )}
         {isComingSoon && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <Badge className="bg-[#D4AF37] text-[#0A1628] font-bold text-sm px-3 py-1">
