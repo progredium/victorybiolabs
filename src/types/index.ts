@@ -118,3 +118,18 @@ export interface LowStockAlert {
   threshold: number
   active: boolean
 }
+
+export interface COA {
+  id: string
+  product_id: string | null
+  product_name: string
+  lot_number: string
+  test_date: string | null
+  expiry_date: string | null
+  purity_percent: number | null
+  test_method: string
+  lab_name: string | null
+  file_url: string | null
+  results: Record<string, string> | null
+  created_at: string
+}

@@ -14,6 +14,7 @@ export default function Header() {
     { href: '/shop', label: 'Shop' },
     { href: '/about', label: 'About' },
     { href: '/education', label: 'Education' },
+    { href: '/lab-reports', label: 'Lab Reports' },
     { href: '/contact', label: 'Contact' },
   ]
 

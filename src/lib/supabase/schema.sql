@@ -222,3 +222,35 @@ CREATE POLICY "Authenticated users can manage orders" ON orders
 -- Allow admin to manage customers
 CREATE POLICY "Authenticated users can manage customers" ON customers
   FOR ALL USING (auth.role() = 'authenticated');
+
+-- ============================================================
+-- COA (Certificate of Analysis) Table
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS coas (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  product_id UUID REFERENCES products(id) ON DELETE CASCADE,
+  product_name TEXT NOT NULL,
+  lot_number TEXT NOT NULL,
+  test_date DATE,
+  expiry_date DATE,
+  purity_percent DECIMAL(5,2),
+  test_method TEXT DEFAULT 'HPLC-MS',
+  lab_name TEXT,
+  file_url TEXT,
+  results JSONB DEFAULT '{}',
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_coas_product_id ON coas(product_id);
+CREATE INDEX IF NOT EXISTS idx_coas_lot_number ON coas(lot_number);
+
+ALTER TABLE coas ENABLE ROW LEVEL SECURITY;
+
+-- COAs are publicly readable (builds trust with customers and payment processors)
+CREATE POLICY "COAs are publicly viewable" ON coas
+  FOR SELECT USING (true);
+
+-- Only authenticated users (admin) can manage COAs
+CREATE POLICY "Authenticated users can manage COAs" ON coas
+  FOR ALL USING (auth.role() = 'authenticated');
